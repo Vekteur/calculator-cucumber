@@ -11,6 +11,7 @@ import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class CalculatorSteps {
 
@@ -119,4 +120,11 @@ public class CalculatorSteps {
 
     }
 
+	@Then("the operation throws a division error")
+	public void thenTheOperationThrowsDivisionError() {
+		//During previous @When steps, extra parameters may have been added to the operation
+		//so we complete its parameter list here:
+		op.addMoreParams(params);
+		assertThrows(OperationException.class, () -> c.eval(op));
+	}
 }

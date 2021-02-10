@@ -91,3 +91,9 @@ Feature: Integer Arithmetic Expressions
       | "-" | 8| 5|     3|
       | "*" | 7| 2|    14|
       | "/" | 6| 2|     3|
+
+  Scenario: Division by zero
+    Given an integer operation '/'
+    When I provide a first number 1
+    And I provide a second number 0
+    Then the operation throws a division error
