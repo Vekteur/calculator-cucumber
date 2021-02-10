@@ -17,6 +17,6 @@ final public class Times extends Operation
 		neutral = 1;
 		}
   
-  public int op(int l, int r)
+  public int op(int l, int r) throws OperationException
     { return (l*r); }
 }

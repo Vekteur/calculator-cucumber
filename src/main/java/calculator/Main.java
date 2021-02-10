@@ -49,11 +49,20 @@ public class Main {
 		e = new Divides(params4,Notation.POSTFIX);
 		c.print(e);
 		c.eval(e);
+
+		List<Expression> params5 = new ArrayList<>();
+		Collections.addAll(params5, new MyNumber(1), new MyNumber(0));
+		e = new Divides(params5);
+		c.printExpressionDetails(e);
+		c.eval(e);
 	}
 
 	catch(IllegalConstruction exception) {
 		System.out.println("cannot create operations without parameters");
 		}
- 	}
+	catch (OperationException e1) {
+		System.out.println(e1.getMessage());
+	}
+  }
 
 }

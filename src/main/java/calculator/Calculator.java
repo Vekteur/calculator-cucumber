@@ -13,13 +13,14 @@ public class Calculator {
      public Expression read(String s)
     */
 
-    public void print(Expression e) {
+    public void print(Expression e) throws OperationException {
+        int res = eval(e);
         System.out.println("The result of evaluating expression " + e);
-        System.out.println("is: " + eval(e) + ".");
+        System.out.println("is: " + res + ".");
         System.out.println();
     }
 
-    public void printExpressionDetails(Expression e) {
+    public void printExpressionDetails(Expression e) throws OperationException {
         print(e);
         System.out.print("It contains " + e.countDepth() + " levels of nested expressions, ");
         System.out.print(e.countOps() + " operations");
@@ -27,7 +28,7 @@ public class Calculator {
         System.out.println();
     }
 
-    public int eval(Expression e) {
+    public int eval(Expression e) throws OperationException {
         // create a new visitor to evaluate expressions
         Evaluator v = new Evaluator();
         // and ask the expression to accept this visitor to start the evaluation process

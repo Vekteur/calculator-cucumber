@@ -101,16 +101,22 @@ public class CalculatorSteps {
 			assertEquals(val, c.eval(op));
 		} catch (IllegalConstruction e) {
 			fail();
-		}
-	}
+		} catch (OperationException e) {
+            e.printStackTrace();
+        }
+    }
 
 	@Then("the operation evaluates to {int}")
 	public void thenTheOperationEvaluatesTo(int val) {
 		//During previous @When steps, extra parameters may have been added to the operation
 		//so we complete its parameter list here:
 		op.addMoreParams(params);
-		assertEquals(val, c.eval(op));
+        try {
+            assertEquals(val, c.eval(op));
+        } catch (OperationException e) {
+            e.printStackTrace();
+        }
 
-	}
+    }
 
 }

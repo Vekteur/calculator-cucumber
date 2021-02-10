@@ -2,11 +2,12 @@ package visitor;
 
 import calculator.MyNumber;
 import calculator.Operation;
+import calculator.OperationException;
 
 /* Visitor design pattern
  */
 public abstract class Visitor {
 
     public abstract void visit(MyNumber n);
-    public abstract void visit(Operation o);
+    public abstract void visit(Operation o) throws OperationException;
 }

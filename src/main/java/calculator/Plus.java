@@ -17,7 +17,7 @@ final public class Plus extends Operation
 		neutral = 0;
   }
 
-  public int op(int l, int r) {
+  public int op(int l, int r) throws OperationException {
   	return (l+r);
   }
 }

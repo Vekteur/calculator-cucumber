@@ -27,8 +27,12 @@ public class TestEvaluator {
 
     @Test
     public void testEvaluatorMyNumber() {
-        assertEquals( value1,
-                      calc.eval(new MyNumber(value1)));
+        try {
+            assertEquals( value1,
+                          calc.eval(new MyNumber(value1)));
+        } catch (OperationException e) {
+            fail();
+        }
     }
 
     @Test
@@ -37,7 +41,7 @@ public class TestEvaluator {
           assertEquals( value1 / value2,
                         calc.eval(op) );
           }
-        catch(IllegalConstruction e) {
+        catch(IllegalConstruction | OperationException e) {
             fail();
         }
     }
@@ -48,7 +52,7 @@ public class TestEvaluator {
             assertEquals( value1 + value2,
                     calc.eval(op) );
         }
-        catch(IllegalConstruction e) {
+        catch(IllegalConstruction | OperationException e) {
             fail();
         }
     }
@@ -59,7 +63,7 @@ public class TestEvaluator {
             assertEquals( value1 - value2,
                     calc.eval(op) );
         }
-        catch(IllegalConstruction e) {
+        catch(IllegalConstruction | OperationException e) {
             fail();
         }
     }
@@ -70,9 +74,21 @@ public class TestEvaluator {
             assertEquals( value1 * value2,
                     calc.eval(op) );
         }
+        catch(IllegalConstruction | OperationException e) {
+            fail();
+        }
+    }
+
+    @Test
+    public void testOperationException(){
+        try {
+            op = new Divides(Arrays.asList(new MyNumber(1), new MyNumber(0)));
+            assertThrows(OperationException.class, () -> calc.eval(op));
+        }
         catch(IllegalConstruction e) {
             fail();
         }
+
     }
 
 }

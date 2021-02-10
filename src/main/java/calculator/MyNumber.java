@@ -12,7 +12,7 @@ public class MyNumber implements Expression
 	  value=v;
 	  }
 
-  public void accept(Visitor v) {
+  public void accept(Visitor v) throws OperationException {
       v.visit(this);
   }
 

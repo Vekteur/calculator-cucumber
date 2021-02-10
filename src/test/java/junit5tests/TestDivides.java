@@ -117,4 +117,15 @@ public class TestDivides {
 		assertEquals(postfix, op.toString());
 	}
 
+	@Test
+	public void testDivisionByZero() {
+		params = new ArrayList<>(Arrays.asList(new MyNumber(1), new MyNumber(0)));
+		try {
+			op = new Divides(params);
+			assertThrows(DivisionByZeroException.class, () -> op.op(1,0));
+		}
+		catch(IllegalConstruction e) { fail(); }
+	}
+
+
 }

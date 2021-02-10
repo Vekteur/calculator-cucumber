@@ -3,6 +3,7 @@ package visitor;
 import calculator.Expression;
 import calculator.MyNumber;
 import calculator.Operation;
+import calculator.OperationException;
 
 import java.util.ArrayList;
 
@@ -16,7 +17,7 @@ public class Evaluator extends Visitor {
         computedValue = n.getValue();
     }
 
-    public void visit(Operation o) {
+    public void visit(Operation o) throws OperationException {
         ArrayList<Integer> evaluatedArgs = new ArrayList<>();
         //first loop to recursively evaluate each subexpression
         for(Expression a:o.args) {
