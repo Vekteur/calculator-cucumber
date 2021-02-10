@@ -75,14 +75,6 @@ public class CalculatorSteps {
 		catch(IllegalConstruction e) { fail(); }
 	}
 
-	@Then("^its (.*) notation is (.*)$")
-	public void thenItsNotationIs(String notation, String s) {
-		if (notation.equals("PREFIX")||notation.equals("POSTFIX")||notation.equals("INFIX")) {
-			op.notation = Notation.valueOf(notation);
-			assertEquals(s, op.toString());
-		}
-		else fail(notation + " is not a correct notation! ");
-	}
 
 	@When("^I provide a (.*) number (\\d+)$")
 	public void whenIProvideANumber(String s, int val) {
@@ -127,4 +119,13 @@ public class CalculatorSteps {
 		op.addMoreParams(params);
 		assertThrows(OperationException.class, () -> c.eval(op));
 	}
+
+	@Then("^its (.*) notation is (.*)$")
+	public void thenItsNotationIs(String notation, String s) {
+		if (notation.equals("PREFIX")||notation.equals("POSTFIX")||notation.equals("INFIX")) {
+			assertEquals(s, op.toString(Notation.valueOf(notation)));
+		}
+		else fail(notation + " is not a correct notation! ");
+	}
+
 }

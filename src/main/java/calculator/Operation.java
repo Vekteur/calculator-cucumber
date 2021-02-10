@@ -1,5 +1,7 @@
 package calculator;
 
+import visitor.Evaluator;
+import visitor.Printer;
 import visitor.Visitor;
 
 import java.util.ArrayList;
@@ -11,7 +13,6 @@ public abstract class Operation implements Expression
   public List<Expression> args;
   protected String symbol;
   protected int neutral; // the neutral element of the operation (e.g. 1 for *, 0 for +)
-  public Notation notation = Notation.INFIX; //by default, expressions are rendered as strings using infix notation
 
   // It is not allowed to create operation that have a null list of arguments.
   // Note that it is allowed to have an EMPTY list of arguments.
@@ -29,12 +30,6 @@ public abstract class Operation implements Expression
   	return args;
   }
 
-  public /*constructor*/ Operation(List<Expression> elist,Notation n)
-		  throws IllegalConstruction
-  {
-  	this(elist);
-  	notation = n;
-  }
   
   abstract public int op(int l, int r) throws OperationException;
     // the operation itself is specified in the subclasses
@@ -75,27 +70,19 @@ public abstract class Operation implements Expression
 			   .getAsInt();  
   }
 
-  @Override
-  final public String toString() {
-  	return toString(notation);
-  }
 
   final public String toString(Notation n) {
-   Stream<String> s = args.stream().map(Object::toString);
-   switch (n) {
-	   case INFIX: return "( " +
-			              s.reduce((s1,s2) -> s1 + " " + symbol + " " + s2).get() +
-			              " )";
-	   case PREFIX: return symbol + " " +
-			               "(" +
-			               s.reduce((s1,s2) -> s1 + ", " + s2).get() +
-			               ")";
-	   case POSTFIX: return "(" +
-			                s.reduce((s1,s2) -> s1 + ", " + s2).get() +
-			                ")" +
-			                " " + symbol;
-	   default: return "This case should never occur.";
-	  }
+  	Printer printer = new Printer(n);
+  	
+  	try{
+		this.accept(printer);
+	}catch (OperationException e){ //Should never happen
+  		throw new RuntimeException(e.getMessage());
+	}
+
+  	return printer.getResult();
+
+
   }
 
 	//Two Operation expressions are equal if their list of arguments is equal and they are the same operation
@@ -120,6 +107,10 @@ public abstract class Operation implements Expression
 		result = prime * result + symbol.hashCode();
 		result = prime * result + args.hashCode();
 		return result;
+	}
+
+	public String getSymbol() {
+		return symbol;
 	}
 
 }

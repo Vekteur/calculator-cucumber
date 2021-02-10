@@ -22,7 +22,6 @@ public class TestDivides {
 		  params = new ArrayList<>(Arrays.asList(new MyNumber(value1), new MyNumber(value2)));
 		  try {
 		  	op = new Divides(params);
-			op.notation = Notation.INFIX; // reset the notation to infix (which is the default) before each test
 		  }
 		  catch(IllegalConstruction e) { fail(); }
 	}
@@ -49,7 +48,7 @@ public class TestDivides {
 		// Two similar expressions, constructed separately (and using different constructors) should be equal
 		ArrayList<Expression> p = new ArrayList<>(Arrays.asList(new MyNumber(value1), new MyNumber(value2)));
 		try {
-			Divides d = new Divides(p, Notation.INFIX);
+			Divides d = new Divides(p);
 			assertEquals(op, d);
 		}
 		catch(IllegalConstruction e) { fail(); }
@@ -66,7 +65,7 @@ public class TestDivides {
 		// Two similar expressions, constructed separately (and using different constructors) should have the same hashcode
 		ArrayList<Expression> p = new ArrayList<>(Arrays.asList(new MyNumber(value1), new MyNumber(value2)));
 		try {
-			Divides e = new Divides(p, Notation.INFIX);
+			Divides e = new Divides(p);
 			assertEquals(e.hashCode(), op.hashCode());
 		}
 		catch(IllegalConstruction e) { fail(); }
@@ -97,24 +96,18 @@ public class TestDivides {
 	public void testPrefix() {
 		String prefix = "/ (" + value1 + ", " + value2 + ")";
 		assertEquals(prefix, op.toString(Notation.PREFIX));
-		op.notation = Notation.PREFIX;
-		assertEquals(prefix, op.toString());
 	}
 
 	@Test
 	public void testInfix() {
 		String infix = "( " + value1 + " / " + value2 + " )";
 		assertEquals(infix, op.toString(Notation.INFIX));
-		op.notation = Notation.INFIX;
-		assertEquals(infix, op.toString());
 	}
 
 	@Test
 	public void testPostfix() {
 		String postfix = "(" + value1 + ", " + value2 + ") /";
 		assertEquals(postfix, op.toString(Notation.POSTFIX));
-		op.notation = Notation.POSTFIX;
-		assertEquals(postfix, op.toString());
 	}
 
 	@Test

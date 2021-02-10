@@ -13,19 +13,27 @@ public class Calculator {
      public Expression read(String s)
     */
 
-    public void print(Expression e) throws OperationException {
+    public void print(Expression e, Notation n) throws OperationException {
         int res = eval(e);
-        System.out.println("The result of evaluating expression " + e);
+        System.out.println("The result of evaluating expression " + e.toString(n));
         System.out.println("is: " + res + ".");
         System.out.println();
     }
 
-    public void printExpressionDetails(Expression e) throws OperationException {
-        print(e);
+    public void print(Expression e) throws OperationException {
+        print(e, Notation.INFIX);
+    }
+
+    public void printExpressionDetails(Expression e, Notation n) throws OperationException {
+        print(e, n);
         System.out.print("It contains " + e.countDepth() + " levels of nested expressions, ");
         System.out.print(e.countOps() + " operations");
         System.out.println(" and " + e.countNbs() + " numbers.");
         System.out.println();
+    }
+
+    public void printExpressionDetails(Expression e) throws OperationException {
+        printExpressionDetails(e, Notation.INFIX);
     }
 
     public int eval(Expression e) throws OperationException {

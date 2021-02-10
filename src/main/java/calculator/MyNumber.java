@@ -16,6 +16,11 @@ public class MyNumber implements Expression
       v.visit(this);
   }
 
+  @Override
+  public String toString(Notation n) {
+      return toString();
+  }
+
 
     public Integer countDepth() {
 	  return 0;
